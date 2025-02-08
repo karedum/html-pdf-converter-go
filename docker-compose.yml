@@ -1,0 +1,28 @@
+version: "3.8"
+services:
+  html-converter:
+    build: .
+    environment:
+      ENV: ${ENV}
+      PORT: ${PORT}
+      TIMEOUT: ${TIMEOUT}
+      IDLE_TIMEOUT: ${IDLE_TIMEOUT}
+      CHROME_ADDRESS: ${CHROME_ADDRESS}
+    ports:
+      - ${PORT}:${PORT}
+    networks:
+      - converter
+    depends_on:
+      - chromedp
+
+  chromedp:
+    image: chromedp/headless-shell:latest
+    networks:
+      - converter
+    ports:
+      - "9222:9222"
+
+networks:
+  converter:
+
+
